@@ -17,6 +17,7 @@ import { supabase } from '../lib/supabase';
 import { Testimonial } from './Testimonial';
 import GradientButton from './ui/GradientButton';
 import { SocialProofPopup } from './SocialProofPopup';
+import { AboutTrainer } from './AboutTrainer';
 
 interface FormData {
   name: string;
@@ -411,6 +412,11 @@ export default function PremiumWebinarLanding() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* About The Trainer */}
+      <div id="about-trainer">
+        <AboutTrainer />
       </div>
 
       {/* Testimonials Section */}
