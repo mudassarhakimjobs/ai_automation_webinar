@@ -1,7 +1,20 @@
 import { useState, useEffect } from 'react';
-import { CheckCircle, Sparkles, Clock, Zap, ArrowRight, Menu, X, PlayCircle, Users, Award, Rocket } from 'lucide-react';
+import {
+  CheckCircle,
+  Sparkles,
+  Zap,
+  ArrowRight,
+  Menu,
+  X,
+  PlayCircle,
+  Users,
+  Award,
+  Rocket,
+  Clock
+} from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Testimonial } from './Testimonial';
+import GradientButton from './ui/GradientButton';
 
 interface FormData {
   name: string;
@@ -241,13 +254,13 @@ export default function PremiumWebinarLanding() {
             </p>
 
             {/* Action Button */}
-            <button
+            <GradientButton
               onClick={() => setIsModalOpen(true)}
-              className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold px-10 py-5 rounded-2xl transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/40 text-xl"
+              className="mt-4"
             >
               Reserve My Free Seat
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </button>
+              <ArrowRight className="w-6 h-6" />
+            </GradientButton>
 
             {/* Key Points with Icons */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-8 w-full">
@@ -341,8 +354,8 @@ export default function PremiumWebinarLanding() {
               }
             ].map((item, index) => (
               <div key={index} className="group relative bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:border-white/30 transition-all duration-300 hover:transform hover:scale-105">
-                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300" style={{ backgroundImage: `linear-gradient(to bottom right, var(--tw-gradient-stops))` }} />
-                <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${item.gradient} mb-5`}>
+                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300" style={{ backgroundImage: `linear - gradient(to bottom right, var(--tw - gradient - stops))` }} />
+                <div className={`inline - flex p - 3 rounded - xl bg - gradient - to - br ${item.gradient} mb - 5`}>
                   <div className="text-white">{item.icon}</div>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
@@ -454,8 +467,8 @@ export default function PremiumWebinarLanding() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white ${errors.name ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'
-                    }`}
+                  className={`w - full px - 4 py - 4 border - 2 rounded - xl focus: ring - 2 focus: ring - blue - 500 focus: border - transparent outline - none transition - all bg - white ${errors.name ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'
+                    } `}
                   placeholder="Enter your full name"
                 />
                 {errors.name && (
@@ -473,8 +486,8 @@ export default function PremiumWebinarLanding() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white ${errors.email ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'
-                    }`}
+                  className={`w - full px - 4 py - 4 border - 2 rounded - xl focus: ring - 2 focus: ring - blue - 500 focus: border - transparent outline - none transition - all bg - white ${errors.email ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'
+                    } `}
                   placeholder="your.email@example.com"
                 />
                 {errors.email && (
@@ -492,8 +505,8 @@ export default function PremiumWebinarLanding() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white ${errors.phone ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'
-                    }`}
+                  className={`w - full px - 4 py - 4 border - 2 rounded - xl focus: ring - 2 focus: ring - blue - 500 focus: border - transparent outline - none transition - all bg - white ${errors.phone ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'
+                    } `}
                   placeholder="10-digit mobile number"
                 />
                 {errors.phone && (

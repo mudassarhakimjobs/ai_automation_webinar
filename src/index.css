@@ -1,3 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@property --r {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes rotating {
+  0% {
+    --r: 0deg;
+  }
+  to {
+    --r: 360deg;
+  }
+}
+
+.rotatingGradient {
+  position: relative;
+  background: conic-gradient(
+    from var(--r),
+    var(--color-gradient) 0%,
+    transparent 10%,
+    var(--color-gradient) 20%,
+    transparent 30%,
+    var(--color-gradient) 40%,
+    transparent 50%,
+    var(--color-gradient) 60%,
+    transparent 70%,
+    var(--color-gradient) 80%,
+    transparent 90%,
+    var(--color-gradient) 100%
+  );
+  animation: 3s linear infinite rotating;
+}
+
+.rotatingGradient::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: var(--color-background);
+  inset: 2px;
+  border-radius: inherit;
+  z-index: 1;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.rotatingGradient:hover::after {
+  background-color: var(--color-background-hover);
+}
