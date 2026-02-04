@@ -10,7 +10,8 @@ import {
   Users,
   Award,
   Rocket,
-  Clock
+  Clock,
+  ShieldCheck
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Testimonial } from './Testimonial';
@@ -19,6 +20,7 @@ import GradientButton from './ui/GradientButton';
 interface FormData {
   name: string;
   email: string;
+  countryCode: string;
   phone: string;
 }
 
@@ -33,6 +35,7 @@ export default function PremiumWebinarLanding() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
+    countryCode: '+91',
     phone: ''
   });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -70,7 +73,11 @@ export default function PremiumWebinarLanding() {
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
     } else if (!phoneRegex.test(formData.phone.replace(/\D/g, ''))) {
-      newErrors.phone = 'Please enter a valid 10-digit phone number';
+      if (formData.countryCode === '+91') {
+        newErrors.phone = 'Please enter a valid 10-digit mobile number';
+      } else {
+        newErrors.phone = 'Please enter a valid phone number';
+      }
     }
 
     setErrors(newErrors);
@@ -92,7 +99,7 @@ export default function PremiumWebinarLanding() {
           {
             name: formData.name.trim(),
             email: formData.email.trim().toLowerCase(),
-            phone: formData.phone.trim()
+            phone: `${formData.countryCode} ${formData.phone.trim()}`
           }
         ]);
 
@@ -112,7 +119,7 @@ export default function PremiumWebinarLanding() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name as keyof FormErrors]) {
@@ -490,23 +497,61 @@ export default function PremiumWebinarLanding() {
                 )}
               </div>
 
-              <div>
-                <label htmlFor="phone" className="block text-sm font-bold text-gray-800 mb-2">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="phone" className="block text-sm font-bold text-gray-800">
                   Phone Number *
                 </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className={`w - full px - 4 py - 4 border - 2 rounded - xl focus: ring - 2 focus: ring - blue - 500 focus: border - transparent outline - none transition - all bg - white ${errors.phone ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'
-                    } `}
-                  placeholder="10-digit mobile number"
-                />
+                <div className="flex gap-2">
+                  <div className="relative w-[110px] flex-shrink-0">
+                    <select
+                      id="countryCode"
+                      name="countryCode"
+                      value={formData.countryCode}
+                      onChange={handleChange}
+                      className="w-full px-3 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none appearance-none bg-white font-medium text-gray-700"
+                    >
+                      <option value="+91">+91 (IN)</option>
+                      <option value="+1">+1 (US)</option>
+                      <option value="+44">+44 (UK)</option>
+                      <option value="+971">+971 (AE)</option>
+                      <option value="+61">+61 (AU)</option>
+                      <option value="+65">+65 (SG)</option>
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={`flex-1 px-4 py-4 border-2 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white font-medium ${errors.phone ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    placeholder="10-digit mobile number"
+                  />
+                </div>
                 {errors.phone && (
-                  <p className="text-red-500 text-sm mt-2 font-medium">{errors.phone}</p>
+                  <p className="text-red-500 text-sm mt-1 font-medium">{errors.phone}</p>
                 )}
+              </div>
+
+              {/* Trust Section */}
+              <div className="bg-blue-50/50 border border-blue-100 rounded-2xl p-5 flex gap-4 transition-colors hover:bg-blue-50">
+                <div className="bg-blue-100/50 p-2.5 rounded-xl h-fit">
+                  <ShieldCheck className="w-6 h-6 text-blue-600" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[15px] font-bold text-gray-900 leading-tight">
+                    Don&apos;t worry, your details are safe.
+                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed font-normal">
+                    We just need this information so that we can share the event details with you once you book successfully.
+                  </p>
+                </div>
               </div>
 
               {errors.submit && (
@@ -518,7 +563,7 @@ export default function PremiumWebinarLanding() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 disabled:from-blue-400 disabled:to-blue-400 text-white font-bold py-5 rounded-xl transition-all transform hover:scale-[1.02] disabled:scale-100 flex items-center justify-center gap-3 shadow-lg shadow-blue-500/50 text-lg"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 disabled:from-blue-400 disabled:to-blue-400 text-white font-bold py-5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:scale-100 flex items-center justify-center gap-3 shadow-lg shadow-blue-500/30 text-lg"
               >
                 {isSubmitting ? (
                   <>
