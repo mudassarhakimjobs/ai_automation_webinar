@@ -193,12 +193,12 @@ export default function PremiumWebinarLanding() {
               <a href="#about" className="text-gray-300 hover:text-white transition-colors font-medium">About</a>
               <a href="#details" className="text-gray-300 hover:text-white transition-colors font-medium">Details</a>
               <a href="#testimonials" className="text-gray-300 hover:text-white transition-colors font-medium">Reviews</a>
-              <button
+              <GradientButton
                 onClick={() => setIsModalOpen(true)}
-                className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-6 py-3 rounded-xl transition-all shadow-lg shadow-blue-500/50 font-semibold"
+                className="!min-w-[160px]"
               >
                 Register Free
-              </button>
+              </GradientButton>
             </div>
 
             <button
@@ -216,15 +216,15 @@ export default function PremiumWebinarLanding() {
             <a href="#about" className="block text-gray-300 hover:text-white py-3 font-medium">About</a>
             <a href="#details" className="block text-gray-300 hover:text-white py-3 font-medium">Details</a>
             <a href="#testimonials" className="block text-gray-300 hover:text-white py-3 font-medium">Reviews</a>
-            <button
+            <GradientButton
               onClick={() => {
                 setIsModalOpen(true);
                 setMobileMenuOpen(false);
               }}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white text-center px-6 py-3 rounded-xl mt-4 font-semibold"
+              className="w-full mt-4 !min-w-0"
             >
               Register Free
-            </button>
+            </GradientButton>
           </div>
         )}
       </nav>
@@ -400,13 +400,14 @@ export default function PremiumWebinarLanding() {
           </div>
 
           <div className="mt-16 text-center">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold px-10 py-5 rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-blue-500/50 text-lg"
-            >
-              Claim Your Free Seat
-              <ArrowRight className="w-6 h-6" />
-            </button>
+            <div className="flex justify-center">
+              <GradientButton
+                onClick={() => setIsModalOpen(true)}
+              >
+                Claim Your Free Seat
+                <ArrowRight className="w-6 h-6" />
+              </GradientButton>
+            </div>
             <p className="text-gray-400 text-sm mt-4">Limited seats • No credit card required</p>
           </div>
         </div>
